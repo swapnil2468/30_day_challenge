@@ -1,0 +1,72 @@
+class Solution {
+public:
+int pivot_Element(vector<int>v){
+    int s=0;
+    int n=v.size();
+    int e=v.size()-1;
+    int mid=(s+e)/2;
+    while (s<=e)
+    {   
+        if(s==e){
+            return s;
+        }
+        if (mid-1>=0 && v[mid]<v[mid-1])
+        {
+            return mid-1;
+        }
+        else if (mid+1<=n && v[mid]>v[mid+1])
+        {
+           return mid;
+        }
+        else if (v[s]>v[mid])
+        {
+            e=mid-1;
+        }
+        else{
+            s=mid+1;
+        }
+        mid=(s+e)/2;
+    }
+    return -1;
+}
+
+int binary_search(vector<int>v,int s,int e, int target){
+    int n=v.size();
+    int mid=(s+e)/2;
+
+    while (s<=e)
+    {
+        if (v[mid]==target)
+        {   
+            return mid;
+        }
+        else if (v[mid]<target)
+        {
+            s=mid+1;
+        }
+        else 
+        {
+            e=mid-1;
+        }
+        mid=(s+e)/2;
+    }
+    
+    return -1;
+}
+
+    int search(vector<int>& v, int target) {
+        int p=pivot_Element(v);
+
+        int n=v.size();
+        int ans=-1;
+        if (target >= v[0] && target<=v[p])
+        {
+            ans = binary_search(v,0,p,target);
+        }
+        else
+        {
+            ans = binary_search(v,p+1,n-1,target);
+        }   
+        return ans;
+    }
+};
